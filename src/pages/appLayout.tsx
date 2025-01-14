@@ -45,8 +45,6 @@ const mainNavItems = [
 
 const accountNavItems = [
   { text: 'Messages', icon: <MessageSquare size={20} />, path: '/messages' },
-  { text: 'Guides & Help', icon: <HelpCircle size={20} />, path: '/help' },
-  { text: 'Settings', icon: <Settings size={20} />, path: '/settings' },
 ];
 
 // Logo Component

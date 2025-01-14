@@ -12,7 +12,6 @@ import { Calendar } from 'lucide-react';
 import StatsCard from '../../components/Dashboard/statsCard';
 import NotificationItem from '../../components/Dashboard/notificationItem';
 import TaskItem from '../../components/Dashboard/taskItem';
-import InspectionHoursChart from '../../components/Dashboard/inspectionHoursChart';
 import WeeklyInspectionsChart from '../../components/Dashboard/weeklyInspectionsChart';
 import PendingTasksChart from '../../components/Dashboard/pendingTasksChart';
 
@@ -33,7 +32,7 @@ const DashboardPage: React.FC = () => {
 
       {/* Stats Overview */}
       <Grid2 container spacing={4} sx={{ mb: 4 }}>
-        <Grid2 size={3}>
+        <Grid2 size={4}>
           <StatsCard
             title="Total Models"
             value="36"
@@ -41,7 +40,7 @@ const DashboardPage: React.FC = () => {
             onClick={() => console.log('View all models')}
           />
         </Grid2>
-        <Grid2 size={3}>
+        <Grid2 size={4}>
           <StatsCard
             title="Total Users"
             value="156"
@@ -49,15 +48,7 @@ const DashboardPage: React.FC = () => {
             onClick={() => console.log('View all users')}
           />
         </Grid2>
-        <Grid2 size={3}>
-          <StatsCard
-            title="Total Sensors"
-            value="752"
-            lastUpdate="22 May 2020"
-            onClick={() => console.log('View all sensors')}
-          />
-        </Grid2>
-        <Grid2 size={3}>
+        <Grid2 size={4}>
           <StatsCard
             title="Total Reports"
             value="2518"
@@ -69,14 +60,11 @@ const DashboardPage: React.FC = () => {
 
       {/* Charts */}
       <Grid2 container spacing={4} sx={{ mb: 4 }}>
-        <Grid2 size={4}>
+        <Grid2 size={6}>
           <WeeklyInspectionsChart />
         </Grid2>
-        <Grid2 size={4}>
+        <Grid2 size={6}>
           <PendingTasksChart />
-        </Grid2>
-        <Grid2 size={4}>
-          <InspectionHoursChart />
         </Grid2>
       </Grid2>
 
@@ -87,14 +75,6 @@ const DashboardPage: React.FC = () => {
             <CardContent>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
                 <Typography variant="h6">Up Coming Tasks</Typography>
-                <Box>
-                  <Button variant="contained" size="small" sx={{ mr: 1 }}>
-                    + Assign Task
-                  </Button>
-                  <IconButton size="small">
-                    <Calendar size={20} />
-                  </IconButton>
-                </Box>
               </Box>
               <TaskItem
                 time="10:00 AM - 12:00 PM"

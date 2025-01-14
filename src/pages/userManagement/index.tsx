@@ -180,17 +180,6 @@ const UserManagementPage = () => {
               View All
             </Button>
           </Box>
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="h4" color="error.main">2</Typography>
-            <Typography color="text.secondary" variant="body2">Blocked Today</Typography>
-            <Button
-              size="small"
-              startIcon={<ViewModule />}
-              sx={{ mt: 1 }}
-            >
-              View All
-            </Button>
-          </Box>
         </Box>
       </Box>
 
@@ -263,20 +252,6 @@ const UserManagementPage = () => {
                       </Box>
                     </Box>
                     <Box sx={{ display: 'flex', gap: 1 }}>
-                      <Button
-                        variant="outlined"
-                        startIcon={<AssignmentInd />}
-                        color="primary"
-                      >
-                        + Grant New Access
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        startIcon={<Block />}
-                        color="error"
-                      >
-                        Revoke All Access
-                      </Button>
                       <IconButton>
                         <MoreVert />
                       </IconButton>
