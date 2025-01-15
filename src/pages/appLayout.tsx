@@ -58,7 +58,7 @@ const Logo: React.FC = () => (
       </svg>
     </div>
     <Typography variant="h6" noWrap component="div" sx={{ color: 'white', display: 'flex' }}>
-      Inspection <span style={{ color: '#FFD700' }}>Inspection</span>
+      Inspection <span style={{ color: '#FFD700' }}>Insight</span>
     </Typography>
   </Box>
 );
