@@ -31,13 +31,14 @@ import {
   HelpCircleIcon,
   ChevronDown
 } from 'lucide-react';
+import { RoutesValueEnum } from '../enums';
 
 // Sidebar width
 const drawerWidth = 280;
 
 // Navigation items
 const mainNavItems = [
-  { text: 'Dashboard', icon: <Home size={20} />, path: '/' },
+  { text: 'Dashboard', icon: <Home size={20} />, path: `/${RoutesValueEnum.dashboard}` },
   { text: 'Models Management', icon: <LayoutGrid size={20} />, path: '/models' },
   { text: 'Users Management', icon: <Users size={20} />, path: '/users' },
   { text: 'Reports', icon: <FileText size={20} />, path: '/reports' },

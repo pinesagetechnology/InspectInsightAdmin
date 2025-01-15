@@ -21,9 +21,6 @@ import {
 import {
   Search,
   MoreVert,
-  Refresh,
-  AssignmentInd,
-  Block,
   ViewModule
 } from '@mui/icons-material';
 import UserListItem from '../../components/User/userListItem';
@@ -159,26 +156,8 @@ const UserManagementPage = () => {
         </Box>
         <Box sx={{ display: 'flex', gap: 6 }}>
           <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="h4">156</Typography>
-            <Typography color="text.secondary" variant="body2">Total Users</Typography>
-            <Button
-              size="small"
-              startIcon={<Refresh />}
-              sx={{ mt: 1 }}
-            >
-              Refresh
-            </Button>
-          </Box>
-          <Box sx={{ textAlign: 'center' }}>
             <Typography variant="h4">36</Typography>
             <Typography color="text.secondary" variant="body2">Active Users</Typography>
-            <Button
-              size="small"
-              startIcon={<ViewModule />}
-              sx={{ mt: 1 }}
-            >
-              View All
-            </Button>
           </Box>
         </Box>
       </Box>
@@ -260,18 +239,6 @@ const UserManagementPage = () => {
 
                   {/* Models List */}
                   <Box>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
-                      <Tabs
-                        value={selectedTab}
-                        onChange={(_, newValue) => setSelectedTab(newValue)}
-                      >
-                        <Tab label="All" />
-                        <Tab label="Assigned" />
-                        <Tab label="In Progress" />
-                        <Tab label="Delayed" />
-                      </Tabs>
-                    </Box>
-
                     <Paper variant="outlined">
                       {models.map((model, index) => (
                         <ModelListItem key={index} model={model} />

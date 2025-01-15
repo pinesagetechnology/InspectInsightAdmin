@@ -61,17 +61,6 @@ const ModelManagementPage: React.FC = () => {
           <StatsCardComponent
             title="All Models"
             value={stats.allModels}
-            icon={<GridView />}
-          />
-          <StatsCardComponent
-            title="Active Models"
-            value={stats.activeModels}
-            icon={<CalendarToday />}
-          />
-          <StatsCardComponent
-            title="Archived Models"
-            value={stats.archivedModels}
-            icon={<History />}
           />
         </Box>
       </Box>
@@ -92,9 +81,6 @@ const ModelManagementPage: React.FC = () => {
           />
           <Button variant="outlined" startIcon={<Refresh />}>
             View All
-          </Button>
-          <Button variant="outlined" startIcon={<History />}>
-            History
           </Button>
         </Box>
 

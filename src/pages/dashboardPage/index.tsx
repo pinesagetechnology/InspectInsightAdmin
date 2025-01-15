@@ -97,7 +97,7 @@ const DashboardPage: React.FC = () => {
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
-                Notifications Centre
+                Reports
               </Typography>
               <NotificationItem
                 route="Route North"
