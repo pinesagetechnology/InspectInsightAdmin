@@ -15,7 +15,7 @@ const initUsersState: UsersState = {
 }
 
 const usersSlice = createSlice({
-  name: "modelsState",
+  name: "structuresState",
   initialState: initUsersState,
   reducers: {
     fetchUsers: (state) => {

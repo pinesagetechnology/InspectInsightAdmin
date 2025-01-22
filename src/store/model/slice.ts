@@ -1,38 +1,38 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Model } from "../../models/model";
+import { Structure } from "../../entities/structure";
 import { resetStateAction } from '../Common/actions';
 
-interface ModelsState {
-    models: Model[];
+interface StructuresState {
+    structures: Structure[];
     isLoading: boolean;
     error?: any;
 }
 
-const initialState: ModelsState = {
-    models: [],
+const initialState: StructuresState = {
+    structures: [],
     isLoading: false,
 };
 
-const modelsSlice = createSlice({
-    name: "modelsState",
+const structuresSlice = createSlice({
+    name: "structuresState",
     initialState: initialState,
     reducers: {
-        fetchModels: (state) => {
+        fetchStructures: (state) => {
             state.isLoading = true;
             state.error = null;
         },
-        fetchModelsSuccess: (state, action: PayloadAction<Model[]>) => {
+        fetchStructuresSuccess: (state, action: PayloadAction<Structure[]>) => {
             state.isLoading = false;
-            state.models = action.payload;
+            state.structures = action.payload;
         },
-        fetchModelsFailure: (state, action: PayloadAction<any>) => {
+        fetchStructuresFailure: (state, action: PayloadAction<any>) => {
             state.isLoading = false;
             state.error = action.payload;
         }
     },
     extraReducers: (builder) => {
         builder.addCase(resetStateAction, (state) => {
-            state.models = [];
+            state.structures = [];
             state.isLoading = false;
             state.error = null;
         });
@@ -40,9 +40,9 @@ const modelsSlice = createSlice({
 });
 
 export const {
-    fetchModels,
-    fetchModelsSuccess,
-    fetchModelsFailure,
-} = modelsSlice.actions;
+    fetchStructures,
+    fetchStructuresSuccess,
+    fetchStructuresFailure,
+} = structuresSlice.actions;
 
-export default modelsSlice.reducer;
+export default structuresSlice.reducer;

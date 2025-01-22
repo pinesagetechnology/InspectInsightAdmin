@@ -34,10 +34,10 @@ const DashboardPage: React.FC = () => {
       <Grid2 container spacing={4} sx={{ mb: 4 }}>
         <Grid2 size={4}>
           <StatsCard
-            title="Total Models"
+            title="Total Structures"
             value="36"
             lastUpdate="22 May 2020"
-            onClick={() => console.log('View all models')}
+            onClick={() => console.log('View all structures')}
           />
         </Grid2>
         <Grid2 size={4}>

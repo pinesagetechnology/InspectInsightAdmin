@@ -15,21 +15,21 @@ import {
   Search,
   Refresh
 } from '@mui/icons-material';
-import StatsCardComponent from '../../components/Model/statsCardComponent';
-import ModelCardComponent from '../../components/Model/cardComponent';
+import StatsCardComponent from '../../components/structure/statsCardComponent';
+import StructureCardComponent from '../../components/structure/cardComponent';
 
-const ModelManagementPage: React.FC = () => {
+const StructureManagementPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [tabValue, setTabValue] = useState(0);
 
   // Example data
   const stats = {
-    allModels: 36,
-    activeModels: 16,
-    archivedModels: 9
+    allStructures: 36,
+    activeStructures: 16,
+    archivedStructures: 9
   };
 
-  const models = [
+  const structures = [
     {
       date: '22 April 2020',
       serialNumber: '201801090015',
@@ -40,7 +40,7 @@ const ModelManagementPage: React.FC = () => {
         image: '/api/placeholder/40/40'
       }
     },
-    // Add more models as needed
+    // Add more structure as needed
   ];
 
 
@@ -50,7 +50,7 @@ const ModelManagementPage: React.FC = () => {
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
         <Box>
           <Typography variant="h4" gutterBottom>
-            Model Management
+            Structure Management
           </Typography>
           <Typography color="text.secondary">
             Lorem ipsum dolor sit amet, adipiscing elit, sed diam nonummy nibh euismod.
@@ -59,8 +59,8 @@ const ModelManagementPage: React.FC = () => {
 
         <Box sx={{ display: 'flex', gap: 4 }}>
           <StatsCardComponent
-            title="All Models"
-            value={stats.allModels}
+            title="All Structures"
+            value={stats.allStructures}
           />
         </Box>
       </Box>
@@ -84,23 +84,14 @@ const ModelManagementPage: React.FC = () => {
           </Button>
         </Box>
 
-        <Tabs
-          value={tabValue}
-          onChange={(_, newValue) => setTabValue(newValue)}
-          sx={{ borderBottom: 1, borderColor: 'divider' }}
-        >
-          <Tab label="All" />
-          <Tab label="Assigned" />
-          <Tab label="Not Assigned" />
-          <Tab label="Completed" />
-        </Tabs>
+
       </Box>
 
-      {/* Models Grid */}
+      {/* Structures Grid */}
       <Grid2 container spacing={3}>
-        {models.map((model, index) => (
+        {structures.map((structure, index) => (
           <Grid2 size={4} key={index}>
-            <ModelCardComponent model={model} />
+            <StructureCardComponent structure={structure} />
           </Grid2>
         ))}
       </Grid2>
@@ -109,4 +100,4 @@ const ModelManagementPage: React.FC = () => {
 
 };
 
-export default ModelManagementPage;
+export default StructureManagementPage;

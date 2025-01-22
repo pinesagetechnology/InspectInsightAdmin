@@ -28,7 +28,7 @@ const PendingTasksChart: React.FC = () => {
     <Card>
       <CardContent>
         <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-          PENDING TASKS
+          INSPECTIONS STATUS
         </Typography>
         <Typography variant="h4" gutterBottom>
           36

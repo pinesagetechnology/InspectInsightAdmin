@@ -1,1 +1,1 @@
-export const FETCH_MODELS_SAGA = 'AdminApp/FETCH_MODELS_SAGA';
+export const FETCH_STRUCTURE_SAGA = 'AdminApp/FETCH_STRUCTURE_SAGA';

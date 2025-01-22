@@ -12,21 +12,21 @@ import {
     ArrowForward,
 } from '@mui/icons-material';
 
-interface ModelCardProps {
-    model: any
+interface StructureCardProps {
+    structure: any
 }
 
-const ModelCardComponent: React.FC<ModelCardProps> = ({ model }) => {
+const StructureCardComponent: React.FC<StructureCardProps> = ({ structure }) => {
     return (
         <Card>
             <CardContent>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
                     <Box>
                         <Typography variant="body2" color="text.secondary">
-                            {model.date}
+                            {structure.date}
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
-                            S/N: {model.serialNumber}
+                            S/N: {structure.serialNumber}
                         </Typography>
                     </Box>
                     <IconButton size="small" color="primary">
@@ -34,22 +34,16 @@ const ModelCardComponent: React.FC<ModelCardProps> = ({ model }) => {
                     </IconButton>
                 </Box>
 
-                <Chip
-                    label="Assigned"
-                    size="small"
-                    sx={{ mb: 2, bgcolor: 'success.light', color: 'success.dark' }}
-                />
-
                 <Typography variant="body1" sx={{ mb: 2 }}>
-                    {model.title}
+                    {structure.title}
                 </Typography>
 
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <Avatar src={model.inspector.image} alt={model.inspector.name} />
+                    <Avatar src={structure.inspector.image} alt={structure.inspector.name} />
                     <Box>
-                        <Typography variant="body2">{model.inspector.name}</Typography>
+                        <Typography variant="body2">{structure.inspector.name}</Typography>
                         <Typography variant="caption" color="text.secondary">
-                            {model.inspector.role}
+                            {structure.inspector.role}
                         </Typography>
                     </Box>
                 </Box>
@@ -58,4 +52,4 @@ const ModelCardComponent: React.FC<ModelCardProps> = ({ model }) => {
     );
 };
 
-export default ModelCardComponent;
+export default StructureCardComponent;

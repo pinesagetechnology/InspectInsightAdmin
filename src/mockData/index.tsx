@@ -1,3 +1,4 @@
+import { Region, User } from "../entities/user";
 import { ConditionRatingEntity, InspectionEntity, MaintenanceActionEntity } from "../entities/inspection";
 import { Structure, StructureElement } from "../entities/structure";
 
@@ -110,7 +111,7 @@ export const sampleElements: StructureElement[] = [
     eciChannel: "3001",
     children: [
       {
-        
+
         elementId: "12",
         code: "BR-301",
         description: "Supports",
@@ -204,77 +205,122 @@ export const mockStructures: Structure[] = [
     elementMetadata: [...sampleElements],
   },
 ];
-export const conditionRatings: ConditionRatingEntity[] = [
+
+export const mockConditionRatings: ConditionRatingEntity[] = [
   {
-    conditionRatingId: "CR-1",
+    conditionRatingId: "BR-102",
     elementId: "3",  // Pier
     ratings: [1234, 2345, 3456, 4567]
   },
   {
-    conditionRatingId: "CR-2",
+    conditionRatingId: "BR-103",
     elementId: "4",  // Abutment
     ratings: [5678, 6789, 7890, 8901]
   },
   {
-    conditionRatingId: "CR-3",
+    conditionRatingId: "BR-105",
     elementId: "6",  // Deck
     ratings: [9012, 1012, 1123, 1234]
   },
   {
-    conditionRatingId: "CR-4",
+    conditionRatingId: "BR-106",
     elementId: "7",  // Bearings
     ratings: [2345, 3456, 4567, 5678]
   },
   {
-    conditionRatingId: "CR-5",
+    conditionRatingId: "BR-201",
     elementId: "9",  // Foundation
     ratings: [6789, 7890, 8901, 9012]
   },
+];
+
+export const mockInspectionData: InspectionEntity[] = [
   {
-    conditionRatingId: "CR-6",
-    elementId: "10", // Columns
-    ratings: [1123, 2234, 3345, 4456]
+    id: "insp-001",
+    structureId: "struct-123",
+    inspectionType: "Routine",
+    inspectionLevel: "Level 1",
+    temperature: 22.5,
+    inspectorName: "John Doe",
+    inspectionDate: "2024-10-15T10:00:00Z",
+    nextInspectionProposedDate: "2025-04-15T10:00:00Z",
+    weather: "Sunny",
+    engineerName: "Jane Smith",
+    rate: "Good",
+    comment: "The structure is in good condition with minor wear and tear.",
+    maintenanceActions: [
+      {
+        id: "maint-001",
+        activityDescription: "Replace worn-out bolts on the bridge deck",
+      } as MaintenanceActionEntity,
+      {
+        id: "maint-002",
+        activityDescription: "Repaint rusted areas",
+      } as MaintenanceActionEntity,
+    ],
+    conditionRatings: [...mockConditionRatings],
+    inspectionStatus: "Completed",
   },
   {
-    conditionRatingId: "CR-7",
-    elementId: "12", // Supports
-    ratings: [5567, 6678, 7789, 8890]
-  },
-  {
-    conditionRatingId: "CR-8",
-    elementId: "14", // Rail Head
-    ratings: [9901, 1012, 1123, 1234]
-  },
-  {
-    conditionRatingId: "CR-9",
-    elementId: "15", // Rail Base
-    ratings: [2345, 3456, 4567, 5678]
+    id: "insp-002",
+    structureId: "struct-123",
+    inspectionType: "Routine",
+    inspectionLevel: "Level 1",
+    temperature: 23,
+    inspectorName: "Richar Keil",
+    inspectionDate: "2024-10-25T10:00:00Z",
+    nextInspectionProposedDate: "2025-04-25T10:00:00Z",
+    weather: "Sunny",
+    engineerName: "Lora Craft",
+    rate: "Good",
+    comment: "The structure is in good condition with minor wear and tear.",
+    maintenanceActions: [
+      {
+        id: "maint-001",
+        activityDescription: "Replace worn-out bolts on the bridge deck",
+      } as MaintenanceActionEntity,
+      {
+        id: "maint-002",
+        activityDescription: "Repaint rusted areas",
+      } as MaintenanceActionEntity,
+    ],
+    conditionRatings: [...mockConditionRatings],
+    inspectionStatus: "InProgress",
   }
 ];
 
-export const mockPreviousInspectionData: InspectionEntity = {
-  id: "insp-001",
-  structureId: "struct-123",
-  inspectionType: "Routine",
-  inspectionLevel: "Level 1",
-  temperature: 22.5,
-  inspectorName: "John Doe",
-  inspectionDate: "2024-10-15T10:00:00Z",
-  nextInspectionProposedDate: "2025-04-15T10:00:00Z",
-  weather: "Sunny",
-  engineerName: "Jane Smith",
-  rate: "Good",
-  comment: "The structure is in good condition with minor wear and tear.",
-  maintenanceActions: [
-    {
-      id: "maint-001",
-      activityDescription: "Replace worn-out bolts on the bridge deck",
-    } as MaintenanceActionEntity,
-    {
-      id: "maint-002",
-      activityDescription: "Repaint rusted areas",
-    } as MaintenanceActionEntity,
-  ],
-  conditionRatings: [...conditionRatings],
+export const mockAuthResult = {
+  accessToken: "mock_access_token",
+  idToken: "mock_id_token",
+  account: {
+    homeAccountId: "user-id-123",
+    environment: "https://login.microsoftonline.com",
+    tenantId: "tenant-id-123",
+    username: "user@example.com"
+  },
+  expiresOn: new Date(new Date().getTime() + 60 * 60 * 1000), // 1 hour from now
+  scopes: ["user.read", "mailbox.settings.read"],
+  fromCache: false
 };
 
+export const Regions: Region[] = [
+  {
+    regionId: "456f7890-f89c-23d4-b567-526725174321",
+    name: "North Region",
+    code: "NR001"
+  }
+]
+
+export const mockUser: User = {
+  userId: "123e4567-e89b-12d3-a456-426614174000",
+  regionId: "456f7890-f89c-23d4-b567-526725174321",
+  azureAdId: "789g1011-g90d-34e5-c678-626836174222",
+  email: "example@example.com",
+  passwordHash: "hashed_password_string",
+  name: "John Doe",
+  roles: ["admin", "user"],
+  createdAt: new Date("2023-01-01T00:00:00Z"),
+  updatedAt: new Date("2023-01-02T00:00:00Z"),
+  title: 'inspector',
+  region: Regions[0]
+};

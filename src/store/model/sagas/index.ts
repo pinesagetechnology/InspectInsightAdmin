@@ -1,26 +1,26 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { Model } from '../../../models/model';
-import { fetchModels, fetchModelsFailure, fetchModelsSuccess } from '../slice';
+import { Structure } from '../../../entities/structure';
+import { fetchStructures, fetchStructuresFailure, fetchStructuresSuccess } from '../slice';
 import * as actions from './actions';
-import * as api from '../../../services/modelService';
+import * as api from '../../../services/structureService';
 
-function* fetchModelsSaga() {
+function* fetchStructuresSaga() {
   try {
-    yield put(fetchModels());
+    yield put(fetchStructures());
 
-    const models: Model[] = yield call(api.getModelsData);
+    const structures: Structure[] = yield call(api.getStructureData);
 
-    yield put(fetchModelsSuccess(models));
+    yield put(fetchStructuresSuccess(structures));
   } catch (error: any) {
     if (error instanceof Error) {
-      yield put(fetchModelsFailure(error.message));
+      yield put(fetchStructuresFailure(error.message));
     } else {
-      yield put(fetchModelsFailure(error));
+      yield put(fetchStructuresFailure(error));
 
     }
   }
 }
 
-export function* modelsRootSaga() {
-  yield takeLatest(actions.FETCH_MODELS_SAGA, fetchModelsSaga);
+export function* structuresRootSaga() {
+  yield takeLatest(actions.FETCH_STRUCTURE_SAGA, fetchStructuresSaga);
 }

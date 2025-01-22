@@ -39,9 +39,9 @@ const drawerWidth = 280;
 // Navigation items
 const mainNavItems = [
   { text: 'Dashboard', icon: <Home size={20} />, path: `/${RoutesValueEnum.dashboard}` },
-  { text: 'Models Management', icon: <LayoutGrid size={20} />, path: '/models' },
+  { text: 'Structures Management', icon: <LayoutGrid size={20} />, path: '/structures' },
   { text: 'Users Management', icon: <Users size={20} />, path: '/users' },
-  { text: 'Reports', icon: <FileText size={20} />, path: '/reports' },
+  { text: 'Inspecrtion Reports', icon: <FileText size={20} />, path: '/inspectionreports' },
 ];
 
 const accountNavItems = [
