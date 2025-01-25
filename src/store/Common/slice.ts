@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { resetStateAction } from '../Common/actions';
+import { resetStateAction } from './actions';
 
 interface loadingOverlayState {
     showLoading: boolean;

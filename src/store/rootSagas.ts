@@ -1,12 +1,14 @@
 import { all, fork } from "redux-saga/effects";
-import { sharedRootSaga } from "./Common/sagas";
-import { usersRootSaga } from "./user/sagas";
+import { sharedRootSaga } from "./common/sagas";
+import { userSagaWatcher } from "./users/sagas";
 import { structuresRootSaga } from "./model/sagas";
+import { authSagaWatcher } from "./auth/sagas";
 
 export default function* rootSaga() {
     yield all([
+        fork(authSagaWatcher),
         fork(sharedRootSaga),
         fork(structuresRootSaga),
-        fork(usersRootSaga),
+        fork(userSagaWatcher),
     ]);
 }

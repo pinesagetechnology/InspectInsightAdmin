@@ -1,136 +1,86 @@
 # Feature Breakdown
-Before start you can refer to entity and model folder to get the interfaces we need to use in the app
 
-interfaces under entity foder reflect the acual data structure of apis data 
+**Before starting, please refer to the 'entity' and 'model' folders to review the interfaces that reflect the actual data structure of the API data.**
 
-# Login
-The login functionality is being done internally to reduce the scope of the project.
-But need to have the redux saga flow in place and set the "mockAuthResult" in redux store and use it in the application flow.
-# Dashboard
+## Login
+The login functionality is handled internally to reduce the scope of the project. However, we need to implement the Redux Saga flow to set the "mockAuthResult" in the Redux store and use it throughout the application.
 
-Quick view of inspections together with some simple visualisations. 
-Upon successful login we should fetch user profile formn below endpoint
+## Dashboard
 
-Endpoint: `api/user?userId={username}`
+A quick view of inspections along with some simple visualizations is required. Upon successful login, we should:
 
-Then fetch all Structures, Inspections, Users and inspection Reports for the logged in user region.
+- Fetch user profile from the following endpoint:
+  - `api/user?userId={username}`
 
-All valid Region structures:
+- Fetch all Structures, Users and Inspection Reports related to the logged-in user's region from these endpoints:
+  - Structures: `api/structure/list?id={regionId}`
+  - Inspections: `api/inspection/list?id={regionId}`
+  - Users: `api/user/list?id={regionId}`
 
-Endpoint: `api/structure/list?id={regionId}`
+### Summaries
 
-All valid region insopections
+Three figures at the top should show a summary of structures, inspections, and users:
 
-Endpoint: `api/inspection/list?id={regionId}`
-
-All active user's region
-
-Endpoint: `api/user/list?id={regionId}`
-
-
-## Summeries
-
-Three figures on top show a summary of structures, inspections and users.
-
-### 1) Total Structures
-
-we need to use the data we fetch intially and show the total number of available structures
-
-### 2) Total Users 
-
-we need to use the data we fetch intially and show the total number of active inspectors
-
-### 3) Total Reports
-
-we should use the data we fetch intially and show the total number of available inspecton reports
+1. **Total Structures:** Use the initially fetched data to show the total number of available structures.
+2. **Total Users:** Use the initially fetched data to show the total number of active inspectors.
+3. **Total Reports:** Use the initially fetched data to show the total number of available inspection reports.
 
 ### UI Components
+- create a re-useable component to show data on the dashboard.
+- `<View All>` buttons will navigate the user to the respective pages, similar to clicking on the menu.
 
-<View All> buttons will navigate the user to the respective page same as clicking on the menue.
+### Visualizations
 
-## Visualisation
-
-### Inspection Chart
-
-from the previosly fetched data we need to show the number of inspections completed in a month duration.
-We need to use BarChart in the "recharts" library 
-X axis date | Y axias number of inspections
-
-### Inspection Status
-
-the pie chart represent the number of todo, inprogress or completed inspections in a 
-month duration.
-
-there is a field, inspectionStatus, in each inspection object:
-status:  `["ToDo" | "In Progress" | "Completed"]`
+1. **Inspection Chart:** Display the number of inspections completed within a month duration using a Bar Chart from the "recharts" library. Set the X-axis as the date and the Y-axis as the number of inspections.
+2. **Inspection Status:** A Pie Chart represents the status of inspections (ToDo, In Progress, Completed) over a month.
 
 ## Analysis Section
 
-### Up comming tasks
-shows only the first 5 comming up inspection. Report shows the first 5 submmited inspection to review. 
+1. **Upcoming Tasks:** Display only the first five upcoming inspections. Similarly, display the first five submitted inspections for review.
+2. **Reports:** Display the last five inspections with the status submitted. Clicking on the 'Review' button navigates to a new page called `<Inspection Report>`, which shows the inspection details.
 
-### Reports
-shows the last 5 inspection with status submitted
-Clicking on Review button navigate to a new page called <Inspection Report> will be opened which shows the inspection detail.
+## pages
 
-The <inspection Report> page; 
-we need to show the inspection detail as below:
-the example of the inspection report "mockInspectionData" in the mock folder
-and there should be button at the end of the page to complete the inspection.
+### Structure Management
 
-# Structure Management
+- Display a list of structures, with the capability to search and filter by name and code.
+- Create a re-useable new components for the tiles.
+- Upon clicking an arrow, it will display the structure data for review and possible updates.
+- Retrieve mock data for the list of structures from "mockStructures" in the mock folder.
+- If the structure has any associated inspections, display the name of the last inspector involved.
 
-Displays a list of Structures.
+### User Management
 
-Able to search and filer by name and code.
+- Display a list of users. We need to be able to edit user detail.
+- Upon clicking on a user, a list of inspections associated with that user will appear on the right.
+- **View Report:** Redirects to the `<Inspection Report>` page mentioned above.
 
-Create new components for the tiles.
+### Add a New User
 
-Upon clicking on the arrow, it’ll show the strucutre data for the user to review and update if necessary.
-
-we can get the mock data of list of structure in the mock fodler. "mockStructures"
-
-if the structure has any inspection, we need to show the name of the last inspector who is in the isnpection list.
-
-# User Management
-
-Displays list of users.
-
-Upon clicking on the user list of inspections associated with the user will be appeared on the right.
-
-**View Report**: it’ll be redirected to <inspection Report page> mentioned above.
-
-## Add a new user
-
-Add a new user with following details:
+We need fnctionality to add a new user with the following details:
 
 - First Name
-- Last name
+- Last Name
 - Email
 - Job Title
 - Supervisor
-- User name 
+- Username
 - Password
-- Region: request from endpoint: `api/user/list/regions` to get the list of region and load them in a dropdown. Persist the `Guid`.
+- Region: Fetch the list of regions from `api/user/list/regions` to populate a dropdown and persist the GUID.
 
-Then call `CreateUserAsync` Endpoint: `[POST] api/user`
+Then call the `CreateUserAsync` endpoint:
+- `[POST] api/user`
 
 ### Inspection Reports
 
-refer to the InspectionEntity interface under entities folder 
-we need to have a page list all inspections with following information
+Refer to the `InspectionEntity` interface in the entities folder. We need a page to list all inspections with the following information:
 
-Structure Name | Inspection Type | Inspector Name | Engineer Name | Inspection Date
+- Structure Name | Inspection Type | Inspector Name | Engineer Name | Inspection Date
 
-and when a user select one item we need to show the full inspection details including the following data
-all InspectionEntity,
-all MaintenanceActionEntity
-all ConditionRatingEntity
+Upon selecting an item, display the full inspection details including:
+- All `InspectionEntity` data
+- All `MaintenanceActionEntity` data
+- All `ConditionRatingEntity` data
 
-
-and a button to sign and approve the report
-
-the button calls the follwoing endpoint
-
-Endpoint: `[Put] api/inspection/review`
-
+Include a button to sign and approve the report, which calls the following endpoint:
+- `[PUT] api/inspection/review`

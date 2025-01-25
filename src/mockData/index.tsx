@@ -1,6 +1,7 @@
 import { Region, User } from "../entities/user";
 import { ConditionRatingEntity, InspectionEntity, MaintenanceActionEntity } from "../entities/inspection";
 import { Structure, StructureElement } from "../entities/structure";
+import { AccountInfo, AuthenticationResult } from '@azure/msal-browser';
 
 export const sampleElements: StructureElement[] = [
   {
@@ -289,7 +290,7 @@ export const mockInspectionData: InspectionEntity[] = [
   }
 ];
 
-export const mockAuthResult = {
+export const mockAuthResult: AuthenticationResult = {
   accessToken: "mock_access_token",
   idToken: "mock_id_token",
   account: {
@@ -297,10 +298,16 @@ export const mockAuthResult = {
     environment: "https://login.microsoftonline.com",
     tenantId: "tenant-id-123",
     username: "user@example.com"
-  },
+  } as AccountInfo,
   expiresOn: new Date(new Date().getTime() + 60 * 60 * 1000), // 1 hour from now
   scopes: ["user.read", "mailbox.settings.read"],
-  fromCache: false
+  fromCache: false,
+  authority: "https://login.microsoftonline.com/tenant-id-123",
+  uniqueId: "user-id-123",
+  tenantId: "tenant-id-123",
+  idTokenClaims: {},
+  tokenType: "Bearer",
+  correlationId: "correlation-id-123",
 };
 
 export const Regions: Region[] = [

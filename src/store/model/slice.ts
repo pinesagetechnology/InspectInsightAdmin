@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Structure } from "../../entities/structure";
-import { resetStateAction } from '../Common/actions';
+import { resetStateAction } from '../common/actions';
 
 interface StructuresState {
     structures: Structure[];

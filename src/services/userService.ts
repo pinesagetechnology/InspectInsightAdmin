@@ -1,4 +1,4 @@
-import { User } from "../models/user";
+import { User } from "../entities/user";
 import api from "../helper/api"
 import mockStructures from '../mockData/get_structure.json';
 

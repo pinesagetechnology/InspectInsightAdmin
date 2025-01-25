@@ -1,103 +1,114 @@
-import React, { useState } from 'react';
+// src/pages/Structures.tsx
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  Box,
-  TextField,
-  Button,
-  Typography,
-  Tabs,
-  Tab,
-  Grid2,
-} from '@mui/material';
-import {
-  GridView,
-  History,
-  CalendarToday,
-  Search,
-  Refresh
-} from '@mui/icons-material';
-import StatsCardComponent from '../../components/structure/statsCardComponent';
-import StructureCardComponent from '../../components/structure/cardComponent';
+  selectStructure,
+  setSearchTerm,
+  setFilters,
+} from '../../store/structure/actions';
+import StructureTile from '../../components/structures/structureTile';
+import StructureDetail from '../../components/structures/structureDetail';
+import StructureFilters from '../../components/structures/structureFilters';
+import { LoadingState } from '../../components/common/loadingState';
+import ErrorAlert from '../../components/common/errorAlert';
+import { Structure } from '../../entities/structure';
+import { selectStructures } from '../../store/structure/selectors';
 
-const StructureManagementPage: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [tabValue, setTabValue] = useState(0);
+const StructuresPage: React.FC = () => {
+  const dispatch = useDispatch();
+  const {
+    structures,
+    selectedStructure,
+    loading,
+    error,
+    searchTerm,
+    filters,
+  } = useSelector(selectStructures);
 
-  // Example data
-  const stats = {
-    allStructures: 36,
-    activeStructures: 16,
-    archivedStructures: 9
+  const handleStructureSelect = (structure: Structure) => {
+    // dispatch(selectStructure(structure));
   };
 
-  const structures = [
-    {
-      date: '22 April 2020',
-      serialNumber: '201801090015',
-      title: 'Lorem ipsum dolor sit amet, adipiscing elit',
-      inspector: {
-        name: 'Marry Johnson',
-        role: 'HRD-Senior Inspector',
-        image: '/api/placeholder/40/40'
-      }
-    },
-    // Add more structure as needed
-  ];
+  const handleSearchChange = (value: string) => {
+    // dispatch(setSearchTerm(value));
+  };
 
+  const handleFilterChange = (key: string, value: string) => {
+    // dispatch(setFilters({ ...filters, [key]: value }));
+  };
+
+  const filteredStructures = React.useMemo(() => {
+    return structures
+      .filter((structure) => {
+        // Apply search filter
+        if (searchTerm) {
+          const searchLower = searchTerm.toLowerCase();
+          return (
+            structure.name.toLowerCase().includes(searchLower) ||
+            structure.code.toLowerCase().includes(searchLower)
+          );
+        }
+        return true;
+      })
+      .filter((structure) => {
+        // Apply type filter
+        if (filters.type && structure.type !== filters.type) {
+          return false;
+        }
+        // Apply region filter
+        if (filters.region && structure.location.region !== filters.region) {
+          return false;
+        }
+        return true;
+      });
+  }, [structures, searchTerm, filters]);
+
+  if (loading) {
+    return (
+      <div className="p-6">
+        <LoadingState message="Loading structures..." />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-6">
+        <ErrorAlert message={error} />
+      </div>
+    );
+  }
 
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default', p: 4 }}>
-      {/* Header */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
-        <Box>
-          <Typography variant="h4" gutterBottom>
-            Structure Management
-          </Typography>
-          <Typography color="text.secondary">
-            Lorem ipsum dolor sit amet, adipiscing elit, sed diam nonummy nibh euismod.
-          </Typography>
-        </Box>
-
-        <Box sx={{ display: 'flex', gap: 4 }}>
-          <StatsCardComponent
-            title="All Structures"
-            value={stats.allStructures}
-          />
-        </Box>
-      </Box>
-
-      {/* Search and Filters */}
-      <Box sx={{ mb: 4 }}>
-        <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-          <TextField
-            placeholder="Try search 'Name' or 'Inspector'"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            variant="outlined"
-            size="small"
-            sx={{ maxWidth: 400 }}
-            InputProps={{
-              startAdornment: <Search sx={{ mr: 1, color: 'text.secondary' }} />
-            }}
-          />
-          <Button variant="outlined" startIcon={<Refresh />}>
-            View All
-          </Button>
-        </Box>
-
-
-      </Box>
+    <div className="p-6 space-y-6">
+      {/* Filters */}
+      <StructureFilters
+        structures={structures}
+        searchTerm={searchTerm}
+        onSearchChange={handleSearchChange}
+        filters={filters}
+        onFilterChange={handleFilterChange}
+      />
 
       {/* Structures Grid */}
-      <Grid2 container spacing={3}>
-        {structures.map((structure, index) => (
-          <Grid2 size={4} key={index}>
-            <StructureCardComponent structure={structure} />
-          </Grid2>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {filteredStructures.map((structure) => (
+          <StructureTile
+            key={structure.id}
+            structure={structure}
+            onSelect={handleStructureSelect}
+          />
         ))}
-      </Grid2>
-    </Box>
-  );
+      </div>
 
+      {/* Structure Detail Side Panel */}
+      <StructureDetail
+        structure={selectedStructure}
+        // onClose={() => handleStructureSelect(null)}\
+        onClose={() => true}
+      />
+    </div>
+  );
 };
 
-export default StructureManagementPage;
+export default StructuresPage;

@@ -1,180 +1,104 @@
-import React, { useState } from 'react';
+// src/pages/Users.tsx
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Plus } from 'lucide-react';
+import UserCard from '../../components/users/userCard';
+import UserInspectionsList from '../../components/users/userInspectionsList';
+import { LoadingState } from '../../components/common/loadingState';
+import ErrorAlert from '../../components/common/errorAlert';
+import EditUserForm from '../../components/users/editUserForm';
+import { User } from '../../entities/user';
+import { getUsersState } from '../../store/users/selectors';
+import { Button } from '@mui/material';
 import {
-  Box,
-  Card,
-  CardContent,
-  TextField,
-  Button,
-  Typography,
-  Avatar,
-  IconButton,
-  Paper,
-  Divider,
-  List,
-} from '@mui/material';
-import {
-  Search,
-  MoreVert,
-} from '@mui/icons-material';
-import UserListItem from '../../components/User/userListItem';
-import { InspectionEntity } from '../../entities/inspection';
-import InspectionListItem from './inspectionListItem';
-import { mockInspectionData } from '../../mockData';
+  SELECT_USER,
+  FETCH_USER_INSPECTIONS,
+} from '../../store/users/types';
 
-interface UserManagementPageProps {
-  inspections: InspectionEntity[];
-}
-// Main Page Component
-const UserManagementPage: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedUser, setSelectedUser] = useState<any>(null);
+const UsersPage: React.FC = () => {
 
-  // Example data
-  const users = [
-    {
-      id: 1,
-      name: "Marry Johnson",
-      title: "HRD-Senior Inspector",
-      structureCount: "18 Structures",
-      lastActive: "27 May 2020",
-      avatar: "/api/placeholder/40/40"
-    },
-    {
-      id: 2,
-      name: "Patty O'Furniture",
-      title: "Inspection level title",
-      structureCount: "6 Structures",
-      lastActive: "25 June 2020",
-      avatar: "/api/placeholder/40/40"
-    },
-    {
-      id: 3,
-      name: "Olive Yew",
-      title: "Inspection level title",
-      structureCount: "2 Structures",
-      lastActive: "12 May 2020",
-      avatar: "/api/placeholder/40/40"
-    }
-  ];
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const {
+    users,
+    selectedUser,
+    userInspections,
+    loading,
+    error
+  } = useSelector(getUsersState);
+
+  const handleUserSelect = (user: User) => {
+    dispatch({
+      type: SELECT_USER,
+      payload: { user },
+    });
+
+    dispatch({
+      type: FETCH_USER_INSPECTIONS,
+      payload: { userId: user.userId },
+    });
+  };
+
+  if (loading) {
+    return (
+      <div className="p-6">
+        <LoadingState message="Loading users..." />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-6">
+        <ErrorAlert message={error} />
+      </div>
+    );
+  }
 
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default', p: 4 }}>
-      {/* Header */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
-        <Box>
-          <Typography variant="h4" gutterBottom>
-            Users Management
-          </Typography>
-          <Typography color="text.secondary">
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-            nonummy nibh euismod tincidunt ut laoree.
-          </Typography>
-        </Box>
-        <Box sx={{ display: 'flex', gap: 6 }}>
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="h4">36</Typography>
-            <Typography color="text.secondary" variant="body2">Active Users</Typography>
-          </Box>
-        </Box>
-      </Box>
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Users</h1>
+        <Button onClick={() => navigate('/users/add')}>
+          <Plus className="h-4 w-4 mr-2" />
+          Add User
+        </Button>
+      </div>
 
-      {/* Main Content */}
-      <Box sx={{ display: 'flex', gap: 3 }}>
-        {/* Left Column - User List */}
-        <Box sx={{ width: 360 }}>
-          <Button
-            variant="contained"
-            fullWidth
-            sx={{ mb: 2 }}
-          >
-            + Add New user
-          </Button>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Users List */}
+        <div className="md:col-span-2 space-y-4">
+          {users.map((user: User) => (
+            <UserCard
+              key={user.userId}
+              user={user}
+              onSelect={handleUserSelect}
+            />
+          ))}
+        </div>
 
-          <TextField
-            fullWidth
-            size="small"
-            placeholder="Try search 'Marry Jackson' or 'Inspector'"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            InputProps={{
-              startAdornment: <Search sx={{ mr: 1, color: 'text.secondary' }} />
-            }}
-            sx={{ mb: 2 }}
-          />
+        {/* Inspections List */}
+        <div className="md:col-span-1">
+          {selectedUser && (
+            <UserInspectionsList inspections={userInspections} />
+          )}
+        </div>
+      </div>
 
-          <Paper variant="outlined">
-            <List disablePadding>
-              {users.map((user, index) => (
-                <React.Fragment key={user.id}>
-                  {index > 0 && <Divider />}
-                  <UserListItem
-                    user={user}
-                    onClick={() => setSelectedUser(user)}
-                    selected={selectedUser?.id === user.id}
-                  />
-                </React.Fragment>
-              ))}
-            </List>
-          </Paper>
-        </Box>
-
-        {/* Right Column - User Details */}
-        <Box sx={{ flex: 1 }}>
-          <Card>
-            <CardContent>
-              {selectedUser ? (
-                <>
-                  {/* User Header */}
-                  <Box sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-start',
-                    mb: 4
-                  }}>
-                    <Box sx={{ display: 'flex', gap: 2 }}>
-                      <Avatar
-                        src={selectedUser.avatar}
-                        sx={{ width: 64, height: 64 }}
-                      />
-                      <Box>
-                        <Typography variant="h6">{selectedUser.name}</Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {selectedUser.title} | ID: DJ2453
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary">
-                          Last Login: {selectedUser.lastActive}
-                        </Typography>
-                      </Box>
-                    </Box>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
-                      <IconButton>
-                        <MoreVert />
-                      </IconButton>
-                    </Box>
-                  </Box>
-
-                  {/* Structures List */}
-                  <Box>
-                    <Paper variant="outlined">
-                      {mockInspectionData.map((inspection, index) => (
-                        <InspectionListItem key={index} inspection={inspection} />
-                      ))}
-                    </Paper>
-                  </Box>
-                </>
-              ) : (
-                <Box sx={{ p: 4, textAlign: 'center' }}>
-                  <Typography color="text.secondary">
-                    Select a user to view details
-                  </Typography>
-                </Box>
-              )}
-            </CardContent>
-          </Card>
-        </Box>
-      </Box>
-    </Box>
+      {/* Edit User Form */}
+      {selectedUser && (
+        <EditUserForm
+          user={selectedUser}
+          open={!!selectedUser}
+          onClose={() => dispatch({
+            type: SELECT_USER,
+          })}
+        />
+      )}
+    </div>
   );
 };
 
-export default UserManagementPage;
+export default UsersPage;
