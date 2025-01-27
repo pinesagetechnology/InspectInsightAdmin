@@ -4,7 +4,7 @@ export interface Model {
     id: string;
     name: string;
     serialNumber: string;
-    status: 'Not Assigned' | 'Assigned' | 'In Progress' | 'Completed' | 'Delayed';
+    status: 'InProgress' | 'Completed';
     dateAssigned: string;
     deadline: string;
     inspector?: User;

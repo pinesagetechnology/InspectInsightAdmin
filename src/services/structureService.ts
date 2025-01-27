@@ -1,6 +1,5 @@
 import { Structure, StructureElement } from "../entities/structure";
 import api from "../helper/api"
-import mockStructures from '../mockData/get_structure.json';
 
 export const getStructureData = async () => {
     await new Promise(resolve => setTimeout(resolve, 3000));
@@ -8,4 +7,14 @@ export const getStructureData = async () => {
     let result = await api.get("api/Structure");
 
     return result.data as Structure[];
+}
+
+export const updateStructure = async (structure: Structure): Promise<Structure> => {
+    const response = await fetch(`api/structure/${structure.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(structure)
+    });
+    if (!response.ok) throw new Error('Failed to update structure');
+    return response.json();
 }

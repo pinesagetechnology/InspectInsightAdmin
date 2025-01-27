@@ -15,8 +15,8 @@ import {
   Search,
   Refresh
 } from '@mui/icons-material';
-import StatsCardComponent from '../../components/Model/statsCardComponent';
-import ModelCardComponent from '../../components/Model/cardComponent';
+import StatsCardComponent from '../../components/structures/statsCardComponent';
+import ModelCardComponent from '../../components/structures/cardComponent';
 
 const ModelManagementPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -83,17 +83,6 @@ const ModelManagementPage: React.FC = () => {
             View All
           </Button>
         </Box>
-
-        <Tabs
-          value={tabValue}
-          onChange={(_, newValue) => setTabValue(newValue)}
-          sx={{ borderBottom: 1, borderColor: 'divider' }}
-        >
-          <Tab label="All" />
-          <Tab label="Assigned" />
-          <Tab label="Not Assigned" />
-          <Tab label="Completed" />
-        </Tabs>
       </Box>
 
       {/* Models Grid */}

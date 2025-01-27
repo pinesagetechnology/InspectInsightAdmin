@@ -1,28 +1,29 @@
 import React from 'react';
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-} from '@mui/material';
-import {
-  PieChart,
-  Pie,
-  Tooltip,
-  ResponsiveContainer,
-  Cell
-} from 'recharts';
+import { Box, Typography, Card, CardContent } from '@mui/material';
+import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { InspectionEntity } from '../../../entities/inspection';
 
+interface PendingTasksChartProps {
+  inspections: InspectionEntity[];
+}
 
-const PendingTasksChart: React.FC = () => {
-  const data = [
-    { name: 'Cantir', value: 45 },
-    { name: 'Sistema', value: 25 },
-    { name: 'Target', value: 15 },
-    { name: 'Cabecce', value: 15 }
-  ];
+const PendingTasksChart: React.FC<PendingTasksChartProps> = ({ inspections }) => {
+  // Aggregate data by status
+  const statusCounts = inspections.reduce((acc: any, { inspectionStatus }) => {
+    acc[inspectionStatus] = (acc[inspectionStatus] || 0) + 1;
+    return acc;
+  }, {});
+
+  // Convert to array format for recharts
+  const data = Object.keys(statusCounts).map(status => ({
+    name: status,
+    value: statusCounts[status]
+  }));
 
   const COLORS = ['#00C49F', '#FF8042', '#FFBB28', '#0088FE'];
+
+  // Calculate total tasks
+  const totalTasks = inspections.length;
 
   return (
     <Card>
@@ -31,7 +32,7 @@ const PendingTasksChart: React.FC = () => {
           PENDING TASKS
         </Typography>
         <Typography variant="h4" gutterBottom>
-          36
+          {totalTasks}
         </Typography>
         <Box sx={{ height: 200 }}>
           <ResponsiveContainer width="100%" height="100%">

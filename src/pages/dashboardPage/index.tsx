@@ -1,21 +1,26 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   Box,
   Typography,
   Card,
   CardContent,
-  Button,
   Grid2,
-  IconButton,
 } from '@mui/material';
-import { Calendar } from 'lucide-react';
-import StatsCard from '../../components/Dashboard/statsCard';
-import NotificationItem from '../../components/Dashboard/notificationItem';
-import TaskItem from '../../components/Dashboard/taskItem';
-import WeeklyInspectionsChart from '../../components/Dashboard/weeklyInspectionsChart';
-import PendingTasksChart from '../../components/Dashboard/pendingTasksChart';
+import StatsCard from '../../components/landingPage/statsCard';
+import NotificationItem from '../../components/landingPage/notificationItem';
+import TaskItem from '../../components/landingPage/taskItem';
+import WeeklyInspectionsChart from '../../components/landingPage/weeklyInspectionsChart';
+import PendingTasksChart from '../../components/landingPage/pendingTasksChart';
+import { getInspections, getTotalInspections, getTotalStructures, getTotalUsers } from '../../store/base/selectors';
 
 const DashboardPage: React.FC = () => {
+
+  const totalUsers = useSelector(getTotalUsers);
+  const totalStructures = useSelector(getTotalStructures);
+  const totalInspections = useSelector(getTotalInspections);
+  const allInspections = useSelector(getInspections);
+
   return (
     <Box sx={{ p: 4 }}>
       {/* Header */}
@@ -34,8 +39,8 @@ const DashboardPage: React.FC = () => {
       <Grid2 container spacing={4} sx={{ mb: 4 }}>
         <Grid2 size={4}>
           <StatsCard
-            title="Total Models"
-            value="36"
+            title="Total Structures"
+            value={totalStructures}
             lastUpdate="22 May 2020"
             onClick={() => console.log('View all models')}
           />
@@ -43,7 +48,7 @@ const DashboardPage: React.FC = () => {
         <Grid2 size={4}>
           <StatsCard
             title="Total Users"
-            value="156"
+            value={totalUsers}
             lastUpdate="22 May 2020"
             onClick={() => console.log('View all users')}
           />
@@ -51,7 +56,7 @@ const DashboardPage: React.FC = () => {
         <Grid2 size={4}>
           <StatsCard
             title="Total Reports"
-            value="2518"
+            value={totalInspections}
             lastUpdate="22 May 2020"
             onClick={() => console.log('View all reports')}
           />
@@ -61,10 +66,10 @@ const DashboardPage: React.FC = () => {
       {/* Charts */}
       <Grid2 container spacing={4} sx={{ mb: 4 }}>
         <Grid2 size={6}>
-          <WeeklyInspectionsChart />
+          <WeeklyInspectionsChart inspections={allInspections} />
         </Grid2>
         <Grid2 size={6}>
-          <PendingTasksChart />
+          <PendingTasksChart inspections={allInspections} />
         </Grid2>
       </Grid2>
 

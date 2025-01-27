@@ -23,7 +23,7 @@ import {
   MoreVert,
   ViewModule
 } from '@mui/icons-material';
-import UserListItem from '../../components/User/userListItem';
+import UserListItem from '../../components/users/userListItem';
 
 
 const ModelListItem = ({ model }: { model: any }) => {
@@ -65,6 +65,7 @@ const ModelListItem = ({ model }: { model: any }) => {
             </Grid2>
           </Grid2>
         </Box>
+
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <Chip
             label={model.status}
@@ -72,20 +73,8 @@ const ModelListItem = ({ model }: { model: any }) => {
             color={getStatusColor(model.status)}
             variant="outlined"
           />
-          <IconButton size="small" onClick={(e) => setAnchorEl(e.currentTarget)}>
-            <MoreVert />
-          </IconButton>
         </Box>
       </Box>
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={() => setAnchorEl(null)}
-      >
-        <MenuItem onClick={() => setAnchorEl(null)}>View Report</MenuItem>
-        <MenuItem onClick={() => setAnchorEl(null)}>Assign</MenuItem>
-        <MenuItem onClick={() => setAnchorEl(null)}>Reassign</MenuItem>
-      </Menu>
     </Box>
   );
 };
@@ -130,14 +119,14 @@ const UserManagementPage = () => {
       caseId: "201801090015",
       date: "22 April 2020",
       deadline: "22 April 2020",
-      status: "Assigned"
+      status: "InProgress"
     },
     {
       title: "Dolor sit amet, adipiscing elit",
       caseId: "201801090015",
       date: "22 April 2020",
       deadline: "22 April 2020",
-      status: "In Progress"
+      status: "InProgress"
     }
   ];
 

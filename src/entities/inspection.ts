@@ -1,3 +1,4 @@
+import { InspectionStatusEnum } from "../enums";
 
 export interface InspectionEntity {
     id: string;
@@ -14,6 +15,7 @@ export interface InspectionEntity {
     comment?: string;
     maintenanceActions: MaintenanceActionEntity[];
     conditionRatings?: ConditionRatingEntity[];
+    inspectionStatus: InspectionStatusEnum ;
 }
 
 export interface MaintenanceActionEntity {

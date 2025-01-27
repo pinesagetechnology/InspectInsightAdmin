@@ -1,1 +1,0 @@
-export const FETCH_MODELS_SAGA = 'AdminApp/FETCH_MODELS_SAGA';

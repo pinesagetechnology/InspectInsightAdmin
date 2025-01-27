@@ -37,6 +37,6 @@ export interface StructureElement {
     unit: string;
     elementCode: string;
     eciChannel: string;
-    condition?: number[] 
+    condition?: number[]
     children?: StructureElement[]; // Optional children to handle hierarchy
 }

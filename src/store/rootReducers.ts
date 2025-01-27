@@ -1,12 +1,16 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import overlayState from "./Common/slice";
-import ModelsState from "./model/slice";
-import UsersState from "./user/slice";
+import overlayState from "./common/slice";
+import baseData from "./base/slice";
+import structureData from "./structure/slice";
+import usersState from './users/slice';
+import inspectionState from './inspections/slice';
 
 const rootReducer = combineReducers({
+    baseData,
+    structureData,
     overlayState,
-    ModelsState,
-    UsersState
+    usersState,
+    inspectionState
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

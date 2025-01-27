@@ -35,7 +35,7 @@ const ModelCardComponent: React.FC<ModelCardProps> = ({ model }) => {
                 </Box>
 
                 <Chip
-                    label="Assigned"
+                    label="In Progress"
                     size="small"
                     sx={{ mb: 2, bgcolor: 'success.light', color: 'success.dark' }}
                 />

@@ -88,7 +88,7 @@ Showing only `ToDo` tasks.
 
 Endpoint: `api/list/bystatus/{status}`
 
-status: `["ToDo" | "In Progress" | "Completed"]`
+status: `["ToDo" | "InProgress" | "Completed"]`
 
 ### Reports
 
@@ -96,7 +96,7 @@ Showing only `Completed` tasks.
 
 Endpoint: `api/list/bystatus/{status}`
 
-status: `["ToDo" | "In Progress" | "Completed"]`
+status: `["ToDo" | "InProgress" | "Completed"]`
 
 # Model Management
 
@@ -110,7 +110,7 @@ Create new components for the tiles.
 
 Endpoint: `api/list/bystatus/{status}`
 
-status: `["ToDo" | "In Progress" | "Completed"]`
+status: `["ToDo" | "InProgress" | "Completed"]`
 
 Upon clicking on the arrow, it’ll be redirected to <inspection detail page> mentioned above.
 
