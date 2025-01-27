@@ -12,7 +12,9 @@ import NotificationItem from '../../components/landingPage/notificationItem';
 import TaskItem from '../../components/landingPage/taskItem';
 import WeeklyInspectionsChart from '../../components/landingPage/weeklyInspectionsChart';
 import PendingTasksChart from '../../components/landingPage/pendingTasksChart';
-import { getInspections, getTotalInspections, getTotalStructures, getTotalUsers } from '../../store/base/selectors';
+import { getInspections, getTotalInspections, getTotalStructures, getTotalUsers, getInspectionsByStatus } from '../../store/base/selectors';
+import { InspectionStatusEnum } from '../../enums';
+import { TaskItemModel } from '../../models/taskItemModel';
 
 const DashboardPage: React.FC = () => {
 
@@ -20,6 +22,9 @@ const DashboardPage: React.FC = () => {
   const totalStructures = useSelector(getTotalStructures);
   const totalInspections = useSelector(getTotalInspections);
   const allInspections = useSelector(getInspections);
+  const upcomingInspections: TaskItemModel[] = useSelector(getInspectionsByStatus(InspectionStatusEnum.InProgress));
+  const submittedInspections: TaskItemModel[] = useSelector(getInspectionsByStatus(InspectionStatusEnum.Submitted));
+
 
   return (
     <Box sx={{ p: 4 }}>
@@ -81,20 +86,16 @@ const DashboardPage: React.FC = () => {
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
                 <Typography variant="h6">Up Coming Tasks</Typography>
               </Box>
-              <TaskItem
-                time="10:00 AM - 12:00 PM"
-                title="Lorem Ipsum Dolor"
-                subtitle="Location of this switch"
-                description="Lorem ipsum dolor sit amet, consectetuer adipisicing elit, sed do eiusmod tempor incididunt ut labore et"
-                inspector="Lion Monesh"
-              />
-              <TaskItem
-                time="10:00 AM - 12:00 PM"
-                title="Excepteur sint occaecat cupidatat"
-                subtitle="Location of this switch"
-                description="Lorem ipsum dolor sit amet, consectetuer adipisicing elit, sed do eiusmod tempor incididunt ut labore et"
-                inspector="Hilda Hamilton"
-              />
+              {upcomingInspections.map((inspection) => (
+                <TaskItem
+                  key={inspection.id}
+                  time={inspection.inspectionDate}
+                  title={inspection.structureName}
+                  subtitle={inspection.location}
+                  description={inspection.comment || ""}
+                  inspector={inspection.inspectorName}
+                />
+              ))}
             </CardContent>
           </Card>
         </Grid2>
@@ -104,20 +105,19 @@ const DashboardPage: React.FC = () => {
               <Typography variant="h6" gutterBottom>
                 Reports
               </Typography>
-              <NotificationItem
-                route="Route North"
-                time="05 May 2019, 2pm - 3pm"
-                location="Location of this switch"
-                title="Lorem Ipsum Dolor Sit Amet Consectetur"
-                description="Discussion topics"
-              />
-              <NotificationItem
-                route="Route South-West"
-                time="05 May 2019, 2pm - 3pm"
-                location="Location of this switch"
-                title="consectetuer adipisicing elit"
-                description="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et"
-              />
+
+              {
+                submittedInspections.map((inspection) => (
+                  <NotificationItem
+                    key={inspection.id}
+                    route={inspection.structureName}
+                    time={inspection.inspectionDate}
+                    location={inspection.location}
+                    title={inspection.inspectorName}
+                    description={inspection.comment || ""}
+                  />
+                ))}
+
             </CardContent>
           </Card>
         </Grid2>

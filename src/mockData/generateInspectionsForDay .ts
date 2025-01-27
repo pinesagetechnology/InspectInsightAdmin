@@ -1,12 +1,14 @@
 import { subDays, formatISO } from 'date-fns';
 import { InspectionStatusEnum } from '../enums';
+import { v4 as uuidv4 } from 'uuid';
+import { TaskItemModel } from '../models/taskItemModel';
 
 // Function to generate random inspections for a given day
 export const generateInspectionsForDay = (day: any) => {
   // Randomly generate between 0 to 10 inspections per day
   const count = Math.floor(Math.random() * 11);
   return Array.from({ length: count }, (_, i) => ({
-    id: `${day}-inspection-${i}`,
+    id: `${uuidv4()}`,
     structureId: `structure-${Math.floor(Math.random() * 10)}`, // Random structure id from 0 to 9
     inspectionType: ['Routine', 'Special', 'Emergency'][Math.floor(Math.random() * 3)],
     inspectionLevel: ['Level 1', 'Level 2', 'Level 3'][Math.floor(Math.random() * 3)],
@@ -24,7 +26,10 @@ export const generateInspectionsForDay = (day: any) => {
       InspectionStatusEnum.Completed,
       InspectionStatusEnum.ToDo,
       InspectionStatusEnum.InProgress,
-      InspectionStatusEnum.Submitted][Math.floor(Math.random() * 3)]
-  }));
+      InspectionStatusEnum.Submitted][Math.floor(Math.random() * 4)],
+      location: 'Location',
+      structureName: 'Structure Name',
+  } as TaskItemModel
+));
 };
 

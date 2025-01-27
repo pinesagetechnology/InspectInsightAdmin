@@ -12,6 +12,7 @@ import {
 } from './slice';
 import { APP_SETUP } from './actions';
 import { InspectionEntity } from '../../entities/inspection';
+import { TaskItemModel } from '../../models/taskItemModel';
 
 function* loginSaga(action: PayloadAction<AuthenticationResult>) {
     try {
@@ -24,18 +25,28 @@ function* loginSaga(action: PayloadAction<AuthenticationResult>) {
         const structures: Structure[] = yield call(apis.fetchStructures, user.regionId);
 
         const users: User[] = yield call(apis.fetchUsers, user.regionId);
-    
+
         const regions: Region[] = yield call(apis.getRegionsData);
 
         let totalInspections = 0;
-        let allInspections = [] as InspectionEntity[];
+        let allInspections = [] as TaskItemModel[];
 
         structures.forEach((structure) => {
             totalInspections += (structure.inspections || []).length;
-            allInspections = allInspections.concat(structure.inspections || []);
+            allInspections = allInspections.concat(structure.inspections?.map(item => {
+                return {
+                    ...item, structureName: structure.name, location: structure.location.region
+                } as TaskItemModel;
+            }) || []);
         });
-    
-        yield put(fetchInitialDataSuccess({ structures, users, regions, totalInspections }));
+
+        yield put(fetchInitialDataSuccess({
+            structures,
+            inspections: allInspections,
+            regions,
+            users,
+            totalInspections,
+        }));
 
     } catch (error: any) {
         yield put(authLoginFailure(error.message));

@@ -1,7 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
-    FETCH_USERS,
     FETCH_USER_INSPECTIONS,
     CREATE_USER,
     UPDATE_USER,

@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Structure } from '../../entities/structure';
-import { InspectionEntity } from '../../entities/inspection';
 import { Region, User } from '../../entities/user';
+import { TaskItemModel } from '../../models/taskItemModel';
+import { InitialDataModel } from '../../models/initialDataModel';
 
 export interface AuthState {
     isAuthenticated: boolean;
     user: User | null;
     structures: Structure[];
-    inspections: InspectionEntity[];
+    inspections: TaskItemModel[];
+    users: User[];
     regions: Region[];
     loading: boolean;
     error: string | null;
@@ -21,6 +23,7 @@ const initialState: AuthState = {
     user: null,
     structures: [],
     inspections: [],
+    users: [],
     loading: false,
     error: null,
     regions: [],
@@ -47,10 +50,11 @@ export const authReducer = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
-        fetchInitialDataSuccess: (state, action: PayloadAction<any>) => {
+        fetchInitialDataSuccess: (state, action: PayloadAction<InitialDataModel>) => {
             state.structures = action.payload.structures;
             state.inspections = action.payload.inspections;
             state.regions = action.payload.regions;
+            state.users = action.payload.users;
             state.totalUsers = action.payload.users.length;
             state.totalStructures = action.payload.structures.length;
             state.totalInspections = action.payload.totalInspections;
