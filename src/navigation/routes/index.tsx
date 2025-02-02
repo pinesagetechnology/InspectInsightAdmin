@@ -5,7 +5,7 @@ import { RoutesValueEnum } from "../../enums";
 const LoginPage = React.lazy(() => import('../../pages/login/index'));
 const DashboardPage = React.lazy(() => import('../../pages/dashboardPage/index'));
 const UserManagementPage = React.lazy(() => import('../../pages/userManagement/index'));
-const StrucutreManagementPage = React.lazy(() => import('../../pages/modelManagementPage/index'));
+const StrucutreManagementPage = React.lazy(() => import('../../pages/structureManagementPage/index'));
 const AdminLayout = React.lazy(() => import('../../pages/appLayout'));
 
 

@@ -33,3 +33,12 @@ export const getInspectionsByStatus = (inspectionStatusValue: InspectionStatusEn
         return [];
     });
 
+export const getLastInspection = (structureId: string) =>
+    createSelector([getInspections], (inspections) => {
+        if (inspections && inspections.length > 0) {
+            const structureInspections = inspections.filter((inspection) => inspection.structureId === structureId) || [];
+            return structureInspections.sort((a, b) => new Date(a.inspectionDate).getTime() - new Date(b.inspectionDate).getTime()).slice(-1)[0];
+        }
+
+        return null;
+    });

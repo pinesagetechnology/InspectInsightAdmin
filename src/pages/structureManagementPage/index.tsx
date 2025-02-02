@@ -1,48 +1,24 @@
 import React, { useState } from 'react';
 import {
   Box,
-  TextField,
   Button,
   Typography,
-  Tabs,
-  Tab,
   Grid2,
 } from '@mui/material';
 import {
-  GridView,
-  History,
-  CalendarToday,
-  Search,
   Refresh
 } from '@mui/icons-material';
 import StatsCardComponent from '../../components/structures/statsCardComponent';
 import ModelCardComponent from '../../components/structures/cardComponent';
+import CustomizedSearchInput from '../../components/searchTextBox';
+import { useSelector } from 'react-redux';
+import { getStructures, getTotalStructures } from '../../store/base/selectors';
 
-const ModelManagementPage: React.FC = () => {
+const StructureManagementPage: React.FC = () => {
+  const totalStrcutures = useSelector(getTotalStructures);
+  const allStructures = useSelector(getStructures);
   const [searchQuery, setSearchQuery] = useState('');
   const [tabValue, setTabValue] = useState(0);
-
-  // Example data
-  const stats = {
-    allModels: 36,
-    activeModels: 16,
-    archivedModels: 9
-  };
-
-  const models = [
-    {
-      date: '22 April 2020',
-      serialNumber: '201801090015',
-      title: 'Lorem ipsum dolor sit amet, adipiscing elit',
-      inspector: {
-        name: 'Marry Johnson',
-        role: 'HRD-Senior Inspector',
-        image: '/api/placeholder/40/40'
-      }
-    },
-    // Add more models as needed
-  ];
-
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default', p: 4 }}>
@@ -50,7 +26,7 @@ const ModelManagementPage: React.FC = () => {
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
         <Box>
           <Typography variant="h4" gutterBottom>
-            Model Management
+            Structures Management
           </Typography>
           <Typography color="text.secondary">
             Lorem ipsum dolor sit amet, adipiscing elit, sed diam nonummy nibh euismod.
@@ -60,7 +36,7 @@ const ModelManagementPage: React.FC = () => {
         <Box sx={{ display: 'flex', gap: 4 }}>
           <StatsCardComponent
             title="All Models"
-            value={stats.allModels}
+            value={totalStrcutures}
           />
         </Box>
       </Box>
@@ -68,17 +44,8 @@ const ModelManagementPage: React.FC = () => {
       {/* Search and Filters */}
       <Box sx={{ mb: 4 }}>
         <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-          <TextField
-            placeholder="Try search 'Name' or 'Inspector'"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            variant="outlined"
-            size="small"
-            sx={{ maxWidth: 400 }}
-            InputProps={{
-              startAdornment: <Search sx={{ mr: 1, color: 'text.secondary' }} />
-            }}
-          />
+          <CustomizedSearchInput setSearchQuery={setSearchQuery} />
+
           <Button variant="outlined" startIcon={<Refresh />}>
             View All
           </Button>
@@ -87,15 +54,16 @@ const ModelManagementPage: React.FC = () => {
 
       {/* Models Grid */}
       <Grid2 container spacing={3}>
-        {models.map((model, index) => (
+        {allStructures.map((strucutre, index) => (
           <Grid2 size={4} key={index}>
-            <ModelCardComponent model={model} />
+            <ModelCardComponent structure={strucutre} />
           </Grid2>
         ))}
+        
       </Grid2>
     </Box>
   );
 
 };
 
-export default ModelManagementPage;
+export default StructureManagementPage;

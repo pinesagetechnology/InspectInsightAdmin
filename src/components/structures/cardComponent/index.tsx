@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
     Box,
     Card,
@@ -11,47 +12,59 @@ import {
 import {
     ArrowForward,
 } from '@mui/icons-material';
+import { Structure } from '../../../entities/structure';
+import { InspectionEntity } from 'entities/inspection';
+import { getLastInspection } from '../../../store/base/selectors';
 
 interface ModelCardProps {
-    model: any
+    structure: Structure;
 }
 
-const ModelCardComponent: React.FC<ModelCardProps> = ({ model }) => {
+const ModelCardComponent: React.FC<ModelCardProps> = ({ structure }) => {
+
+    const lastInspection = useSelector(getLastInspection(structure.id));
+
     return (
         <Card>
             <CardContent>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+
+
+                <Typography variant="body1" sx={{ mb: 2 }}>
+                    {structure.name}
+                </Typography>
+
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
                     <Box>
-                        <Typography variant="body2" color="text.secondary">
-                            {model.date}
-                        </Typography>
+                        <Typography variant="body2">{structure.code}</Typography>
                         <Typography variant="caption" color="text.secondary">
-                            S/N: {model.serialNumber}
+                            {structure.overalLength} x {structure.overalWidth}
                         </Typography>
                     </Box>
+                    {(lastInspection && lastInspection?.inspectionStatus) &&
+                        (<Chip
+                            label={lastInspection?.inspectionStatus}
+                            size="small"
+                            sx={{ mb: 2, bgcolor: 'success.light', color: 'success.dark' }}
+                        />)
+                    }
+                    {
+                        lastInspection &&
+                        (
+                            <Box sx={{ display: 'flex', mb: 2 }}>
+                                <Box>
+                                    <Typography variant="body2" color="text.secondary">
+                                        {structure.lastInspectionDate}
+                                    </Typography>
+                                    <Typography variant="caption" color="text.secondary">
+                                        structure Name: {structure.name}
+                                    </Typography>
+                                </Box>
+                            </Box>
+                        )
+                    }
                     <IconButton size="small" color="primary">
                         <ArrowForward />
                     </IconButton>
-                </Box>
-
-                <Chip
-                    label="In Progress"
-                    size="small"
-                    sx={{ mb: 2, bgcolor: 'success.light', color: 'success.dark' }}
-                />
-
-                <Typography variant="body1" sx={{ mb: 2 }}>
-                    {model.title}
-                </Typography>
-
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <Avatar src={model.inspector.image} alt={model.inspector.name} />
-                    <Box>
-                        <Typography variant="body2">{model.inspector.name}</Typography>
-                        <Typography variant="caption" color="text.secondary">
-                            {model.inspector.role}
-                        </Typography>
-                    </Box>
                 </Box>
             </CardContent>
         </Card>
